@@ -28,15 +28,21 @@ def encode_message(input_message, n):
       scaled += base
       #convert unicode back to character and concatenate onto encoded_message string
       encoded_message += chr(scaled)
-    #cancatenate non-alphabetic characters as is
+    #check if char is a digit
+    elif char.isdigit():
+      #shift digit by value of n and use modulo 10 to account for wrap-around
+      scaled = (int(char) + n) % 10
+      #convert back to character and concatenate onto encoded_message string
+      encoded_message += str(scaled)
+    #concatenate non-alphabetic and non-digit characters as is
     else:
-      encode_messaged += char
+      encoded_message += char
   return encoded_message
   
 #decodes the encoded message back to the original message 
 def decode_message(encoded_message, n):
   #reverses substitution cypher by calling encode_message method by the negative factor of n 
-  return encode_message(encode_message, -n)
+  return encode_message(encoded_message, -n)
 
 def main():
   #prompt user for integer between 1-25
@@ -52,13 +58,13 @@ def main():
   #decode the message
   decoded_message = decode_message(encoded_message, n)
 
-  #print messages
-  print("Original Message: ", input_message)
+  #print expected output
+  print()
+  print("Input Message: ", input_message)
+  print("Shift(n): ", n)
   print("Encoded Message: ", encoded_message)
   print("Decoded message: ", decoded_message)
+  print()
 
-
-
-
-
-
+if __name__ == "__main__":
+    main()
